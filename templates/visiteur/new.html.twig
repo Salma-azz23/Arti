@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Visiteur{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un Visiteur</h1>
+
+    {{ include('visiteur/_form.html.twig', {'button_label': 'Créer'}) }}
+
+{% endblock %}

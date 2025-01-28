@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Visiteur{% endblock %}
+
+{% block body %}
+<div class="container mt-5 p-5 rounded shadow-lg" 
+     style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 15px;">
+    <!-- Titre principal -->
+    <h1 class="text-center fw-bold mb-4" 
+        style="color: #2c3e50; font-size: 2.5rem; text-transform: capitalize; letter-spacing: 1px;">
+        Informations du Visiteur
+    </h1>
+
+    <!-- Carte des détails -->
+    <div class="card p-4" style="border-radius: 12px; background: linear-gradient(to bottom, #ffffff, #f4f4f4);">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-4 text-end fw-semibold text-muted">ID :</div>
+                <div class="col-8 text-start text-dark">{{ visiteur.id }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-4 text-end fw-semibold text-muted">Nom :</div>
+                <div class="col-8 text-start text-dark">{{ visiteur.nom }}</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-4 text-end fw-semibold text-muted">Email :</div>
+                <div class="col-8 text-start text-dark">{{ visiteur.email }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton de retour -->
+    <div class="text-center mt-5">
+        <a href="{{ path('visiteur_index') }}" 
+           class="btn btn-primary px-4 py-2 shadow-sm" 
+           style="border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            <i class="bi bi-arrow-left-circle me-2"></i>Retour à la liste
+        </a>
+    </div>
+</div>
+{% endblock %}

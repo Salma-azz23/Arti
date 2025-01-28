@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Titre principal -->
+    <div class="text-center mb-5">
+        <h1 class="display-4" style="font-weight: bold; color:rgb(103, 26, 16);">🎨 Statistiques des Artistes</h1>
+        <p class="lead text-muted">Découvrez les performances et contributions des artistes et visiteurs.</p>
+    </div>
+
+    <!-- Cartes des statistiques globales -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 text-center" style="background:rgb(118 83 72); color: #fff;">
+                <div class="card-body">
+                    <h4>Artistes</h4>
+                    <p class="display-3">{{ nombreArtistes }}</p>
+                    <i class="bi bi-person-circle" style="font-size: 3rem;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 text-center" style="background: rgb(168 112 108); color: #fff;">
+                <div class="card-body">
+                    <h4>Œuvres</h4>
+                    <p class="display-3">{{ nombreOeuvres }}</p>
+                    <i class="bi bi-palette" style="font-size: 3rem;"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 text-center" style="background:rgb(97 18 45); color: #fff;">
+                <div class="card-body">
+                    <h4>Visiteurs</h4>
+                    <p class="display-3">{{ nombreVisiteurs }}</p>
+                    <i class="bi bi-people-fill" style="font-size: 3rem;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques dynamiques -->
+<div class="row mt-5">
+    <h2 class="text-center w-100 mb-4" style="color: rgb(114, 35, 65);">📊 Performances Graphiques</h2>
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+        <div class="card shadow-lg border-0 w-100">
+            <div class="card-body">
+                <h5 class="text-center">Œuvres par Artiste</h5>
+                <canvas id="oeuvresParArtisteChart" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+        <div class="card shadow-lg border-0 w-100">
+            <div class="card-body">
+                <h5 class="text-center">Top Artistes</h5>
+                <canvas id="topArtistesChart" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Tableau des œuvres par artiste -->
+<div class="row mt-5">
+    <h2 class="text-center w-100 mb-4" style="color: rgb(78, 26, 17);">🖼 Classement des Œuvres</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" style="background-color: #f9f9f9; border-radius: 8px; overflow: hidden;">
+            <thead style="background: linear-gradient(90deg, rgba(136, 89, 80, 1) 0%, rgba(114, 35, 65, 1) 100%); color: #fff;">
+                <tr>
+                    <th style="text-align: center; padding: 15px; font-size: 1.1rem;">🎨 Artiste</th>
+                    <th style="text-align: center; padding: 15px; font-size: 1.1rem;">📊 Nombre d’œuvres</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in oeuvresParArtiste %}
+                    <tr style="transition: background-color 0.3s;">
+                        <td style="text-align: center; padding: 12px; font-weight: 500; color: rgb(78, 26, 17);">{{ stat.artiste_nom }}</td>
+                        <td style="text-align: center; padding: 12px; font-weight: 600; color: rgb(114, 35, 65);">{{ stat.nb_oeuvres }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2" class="text-center" style="padding: 20px; font-style: italic; color: gray;">Aucune donnée disponible.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div>
+
+<!-- Scripts pour Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Données pour les œuvres par artiste
+    const oeuvresParArtisteLabels = {{ oeuvresParArtiste|map(stat => stat.artiste_nom)|json_encode|raw }};
+    const oeuvresParArtisteData = {{ oeuvresParArtiste|map(stat => stat.nb_oeuvres)|json_encode|raw }};
+
+    new Chart(document.getElementById('oeuvresParArtisteChart'), {
+        type: 'bar',
+        data: {
+            labels: oeuvresParArtisteLabels,
+            datasets: [{
+                label: 'Nombre d’œuvres',
+                data: oeuvresParArtisteData,
+                backgroundColor: 'rgba(204, 73, 73, 0.7)',
+                borderColor: 'rgb(90, 25, 25)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: 'Œuvres par Artiste' }
+            }
+        }
+    });
+
+    // Exemple de données pour les artistes les plus actifs
+    const topArtistesLabels = ['Artiste A', 'Artiste B', 'Artiste C']; // Remplacez par des données réelles
+    const topArtistesData = [20, 15, 10]; // Remplacez par des données réelles
+
+    new Chart(document.getElementById('topArtistesChart'), {
+        type: 'doughnut',
+        data: {
+            labels: topArtistesLabels,
+            datasets: [{
+                data: topArtistesData,
+                backgroundColor: ['rgba(101, 33, 7, 0.81)', 'rgb(201, 82, 124)', 'rgba(118, 78, 115, 0.58)'],
+                borderColor: ['#fff', '#fff', '#fff']
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: 'Top Artistes' }
+            }
+        }
+    });
+</script>
+{% endblock %}

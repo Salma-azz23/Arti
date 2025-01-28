@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'Œuvre{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Carte principale -->
+    <div class="card shadow-lg p-4" style="background-color: rgba(199, 176, 174, 0.12); border-radius: 15px;">
+        <!-- Photo de l'œuvre -->
+        <div class="text-center mb-4">
+            {% if oeuvre.photo %}
+                <img src="{{ asset('uploads/photos/' ~ oeuvre.photo) }}" 
+                     alt="Photo de {{ oeuvre.titre }}" 
+                     class="rounded img-thumbnail shadow-lg" 
+                     style="width: 250px; height: 250px; object-fit: cover; border-radius: 10px;">
+            {% else %}
+                <img src="{{ asset('uploads/photos/oeuvre-default.jpg') }}" 
+                     alt="Photo par défaut" 
+                     class="rounded img-thumbnail shadow-lg" 
+                     style="width: 250px; height: 250px; object-fit: cover; border-radius: 10px;">
+            {% endif %}
+        </div>
+
+        <!-- Titre de l'œuvre -->
+        <h2 class="text-center text-dark font-weight-bold mb-4" style="font-size: 2rem; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+            {{ oeuvre.titre }}
+        </h2>
+
+        <!-- Section des détails -->
+        <div class="row">
+            <!-- Carte de description -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm p-4" style="background-color: #f3f2f0; border-radius: 12px;">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-info-circle" style="font-size: 1.5rem; color: #4b2f2f; margin-right: 10px;"></i>
+                        <h5 class="mb-0 text-dark" style="font-weight: 600;">Description</h5>
+                    </div>
+                    <hr>
+                    <p class="mt-2 text-dark" style="font-size: 1rem; line-height: 1.5;">
+                        {{ oeuvre.description }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Carte de date de création -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm p-4" style="background-color: #f3f2f0; border-radius: 12px;">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-calendar" style="font-size: 1.5rem; color: #4b2f2f; margin-right: 10px;"></i>
+                        <h5 class="mb-0 text-dark" style="font-weight: 600;">Date de Création</h5>
+                    </div>
+                    <hr>
+                    <p class="mt-2 text-dark" style="font-size: 1rem; line-height: 1.5;">
+                        {{ oeuvre.dateCreation ? oeuvre.dateCreation|date('d-m-Y') : 'Non définie' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section de l'artiste associé -->
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm p-4" style="background-color: #f3f2f0; border-radius: 12px;">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-person" style="font-size: 1.5rem; color: #4b2f2f; margin-right: 10px;"></i>
+                        <h5 class="mb-0 text-dark" style="font-weight: 600;">Artiste Associé</h5>
+                    </div>
+                    <hr>
+                    {% if oeuvre.artiste %}
+                        <p class="mt-2 text-dark" style="font-size: 1rem;">
+                            <a href="{{ path('artiste_show', {'id': oeuvre.artiste.id}) }}" class="text-decoration-none text-dark">
+                                {{ oeuvre.artiste.nom }}
+                            </a>
+                        </p>
+                    {% else %}
+                        <p class="text-muted text-dark" style="font-size: 1rem;">Aucun artiste associé.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Section des boutons -->
+        <div class="buttons-group mt-4 text-center">
+            <!-- Bouton Modifier -->
+            <a href="{{ path('app_oeuvre_edit', {'id': oeuvre.id}) }}" 
+               class="btn btn-warning me-2 shadow-sm btn-action" 
+               style="border-radius: 30px; background-color: #8c6e4f; color: white; border: none; padding: 10px 20px;">
+                <i class="bi bi-pencil-square"></i> Modifier
+            </a>
+            
+            <!-- Bouton Suppression -->
+            {{ include('oeuvre/_delete_form.html.twig', {'id': oeuvre.id}) }}
+        </div>
+
+        <div class="text-end mt-3">
+            <a href="{{ path('oeuvre_index') }}" 
+               class="btn btn-secondary shadow-sm" 
+               style="border-radius: 30px; background-color: #6c757d; color: white; padding: 10px 20px;">
+                <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+
+{% block stylesheets %}
+    <style>
+        /* Effet de hover pour les boutons Modifier et Suppression */
+        .btn-action {
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background-color: #bf8040; /* Couleur marron clair */
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Assurer que les boutons ont des dimensions similaires */
+        .btn {
+            width: 160px; /* largeur uniforme */
+            font-size: 1rem;
+            padding: 12px 20px;
+            border-radius: 30px;
+        }
+
+        .btn-secondary {
+            width: 160px; /* largeur uniforme pour le bouton Retour */
+        }
+    </style>
+{% endblock %}
+
+{% endblock %}

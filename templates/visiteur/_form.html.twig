@@ -1,0 +1,39 @@
+<div class="container mt-5 p-4 rounded" 
+     style="background-color:linear-gradient(135deg, rgb(71 23 10 / 26%), rgb(76 40 40 / 7%), rgba(199, 176, 174, 0.12), rgb(76 40 40 / 57%)); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); border: 1px solid #f7f5f2;">
+    <!-- Titre principal -->
+    <h2 class="text-center mb-4 fw-bold" 
+        style="color: #4e3020; font-size: 1.8rem; text-transform: uppercase; letter-spacing: 1px;">
+        <i class="bi bi-person-plus-fill" style="color: #4e3020; margin-right: 10px;"></i>
+        Visiteur
+    </h2>
+    
+     {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.nom, 'Nom') }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le nom du visiteur'}}) }}
+            {{ form_errors(form.nom) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.email, 'Email') }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez l\'email du visiteur'}}) }}
+            {% if form.email.vars.errors|length > 0 %}
+                <div class="text-danger">
+                    {{ form_errors(form.email) }}
+                </div>
+            {% endif %}
+        </div>
+
+        {# Si vous avez d'autres champs comme oeuvres ou artistes, ajoutez-les ici. Exemple : #}
+        {# 
+        <div class="form-group">
+            {{ form_label(form.oeuvres, 'Œuvres') }}
+            {{ form_widget(form.oeuvres, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.oeuvres) }}
+        </div>
+        #}
+
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="{{ path('visiteur_index') }}" class="btn btn-secondary">Annuler</a>
+    {{ form_end(form) }}
+</div>

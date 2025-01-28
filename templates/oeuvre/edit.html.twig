@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une Oeuvre{% endblock %}
+
+{% block body %}
+    <h1>Modifier une Oeuvre</h1>
+
+    {{ include('oeuvre/_form.html.twig', {'form': form, 'button_label': 'Mettre à jour'}) }}
+
+{% endblock %}

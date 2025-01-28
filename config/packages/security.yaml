@@ -1,0 +1,99 @@
+security:
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/ # Accès libre pour certains fichiers
+            security: false
+
+        main:
+            lazy: true
+            provider: app_user_provider
+
+            # Définir l'entrée principale de l'authentification
+            entry_point: form_login
+
+            # Configuration de l'authentification via formulaire
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                username_parameter: email
+                password_parameter: password
+                enable_csrf: true
+                default_target_path: /artiste/
+
+            # Déconnexion
+            logout:
+                path: app_logout
+                target: /
+
+            # Fonctionnalité "se souvenir de moi"
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 7 jours
+                path: /
+                always_remember_me: true
+
+    access_control:
+        - { path: ^/dashboard, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
+# Configuration pour l'environnement de test
+when@test:
+    security:
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+        providers:
+            app_user_provider:
+                entity:
+                    class: App\Entity\User
+                    property: email
+
+        firewalls:
+            dev:
+                pattern: ^/(_(profiler|wdt)|css|images|js)/ # Accès libre pour le test
+                security: false
+
+            main:
+                anonymous: true
+                provider: app_user_provider
+
+                # Authentification via formulaire
+                form_login:
+                    login_path: app_login
+                    check_path: app_login
+                    enable_csrf: true
+                    username_parameter: email
+                    password_parameter: password
+                    default_target_path: /artiste/
+
+                # Déconnexion
+                logout:
+                    path: app_logout
+                    target: /
+
+                # Fonctionnalité "se souvenir de moi"
+                remember_me:
+                    secret: '%kernel.secret%'
+                    lifetime: 604800
+                    path: /
+                    always_remember_me: true
+
+                # Authentificateur personnalisé
+                custom_authenticators:
+                    - App\Security\LoginAuthenticator
+
+                # Définir le entry_point
+                entry_point: App\Security\LoginAuthenticator
+
+        access_control:
+            - { path: ^/artiste/, roles: ROLE_ADMIN }
+            - { path: ^/artiste/, roles: ROLE_USER }

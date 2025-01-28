@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestion des Entités{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color:rgb(231, 223, 214);
+            display: flex;
+            flex-direction: row;
+        }
+
+        .custom-thead {
+    background: linear-gradient(135deg,rgb(39, 24, 6), #e8d1b0);
+    color: #4e4e50;
+    font-size: 16px;
+}
+
+
+        
+
+        /* Sidebar styles */
+        .sidebar {
+    width: 280px;
+    background: linear-gradient(135deg, #2c2725,rgb(78, 55, 47),rgb(108, 90, 83));
+    color: #ECF0F1;
+    padding: 30px 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-right: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar:hover {
+    width: 300px;
+    background: linear-gradient(135deg, #5a433f, #3a2e2b);
+}
+
+.sidebar h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color:rgb(179, 152, 150);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #ECF0F1;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #dcd8d3;
+    color:rgb(69, 15, 10);
+}
+
+.sidebar ul li a i {
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.sidebar-footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #BDC3C7;
+    padding: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+        .sidebar h5 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #ECF0F1;
+            text-decoration: none;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color:#dcd8d3;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar i {
+            font-size: 1.4rem;
+            margin-right: 15px;
+        }
+
+        /* Content styles */
+        .content {
+            margin-left: 300px;
+            padding: 30px;
+            flex: 1;
+        }
+
+        .content h1 {
+            color: #4e3935;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .row .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .row .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card .card-body {
+            padding: 20px;
+        }
+
+        .card .card-title {
+            font-size: 1.2rem;
+            color: #876962;
+        }
+
+        .card .card-text {
+            color: #6c757d;
+        }
+
+        .btn-primary {
+            background-color:rgb(144, 51, 22);
+            border: none;
+        }
+
+        .btn-primary {
+            background-color:rgb(161, 142, 136);
+            color: #212529;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color:rgb(123, 68, 62);
+        }
+
+        .btn-success {
+            background-color:rgb(159, 97, 85);
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #925b50;
+        }
+
+        .btn-warning {
+            background-color:rgb(161, 142, 136);
+            color: #212529;
+            border: none;
+        }
+
+        .btn-warning:hover {
+            background-color:rgb(80, 66, 63);
+        }
+
+        .btn-outline-danger {
+            background-color:rgb(119, 62, 62);
+            color: #212529;
+            border: none;
+        }
+
+        /* Statistics styles */
+        .stat-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: #4e3935;
+        }
+
+        .stat-card p {
+            color: #6c757d;
+        }
+
+        .stat-card .stat-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    display: block;
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    color: #555;
+    font-size: 14px;
+    text-decoration: none;
+    background-color: #f4f6f9;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-link:hover {
+    background-color:rgb(125, 109, 79);
+    color: white;
+}
+
+.page-item.active .page-link {
+    background-color:rgb(90, 69, 40);
+    color: white;
+    font-weight: bold;
+}
+
+.page-item.disabled .page-link {
+    background-color: #e0e0e0;
+    color: #bbb;
+    pointer-events: none;
+}
+
+.page-link[aria-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h1>🎨 ARTI</h1>
+        <ul>
+         <li><a href="{{ path('artiste_index') }}"><i class="bi bi-palette"></i> Artistes</a></li>
+         <li><a href="{{ path('oeuvre_index') }}"><i class="bi bi-image"></i> Oeuvres</a></li>
+         <li><a href="{{ path('visiteur_index') }}"><i class="bi bi-people"></i> Visiteurs</a></li>
+         <li><a href="{{ path('app_statistiques') }}"><i class="bi bi-bar-chart-line"></i> Statistiques</a></li>
+         </ul>
+             <div class="sidebar-footer">
+        &copy; 2025 ARTI<br> Tous droits réservés.
+    </div>
+
+    </div>
+    
+
+    <div class="content">
+        {% block body %}
+        <h1>Bienvenue dans la gestion des entités</h1>
+        <p>Utilisez le menu à gauche pour naviguer entre les différentes entités.</p>
+
+        <!-- Statistics Section -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h3>Artistes</h3>
+                    <p>Nombre total d'artistes enregistrés</p>
+                    <div class="stat-value">{{ total_artistes }}</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h3>Œuvres</h3>
+                    <p>Nombre total d'œuvres disponibles</p>
+                    <div class="stat-value">{{ total_oeuvres }}</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h3>Visiteurs</h3>
+                    <p>Nombre total de visiteurs inscrits</p>
+                    <div class="stat-value">{{ total_visiteurs }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Artistes</h5>
+                        <p class="card-text">Gérez les informations des artistes. Consultez, ajoutez ou modifiez leurs profils.</p>
+                        <a href="{{ path('artiste_index') }}" class="btn btn-primary">Voir les artistes</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Œuvres</h5>
+                        <p class="card-text">Visualisez et administrez les œuvres associées aux artistes.</p>
+                        <a href="{{ path('oeuvre_index') }}" class="btn btn-success">Voir les œuvres</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Visiteurs</h5>
+                        <p class="card-text">Gérez les visiteurs, leurs informations et leurs interactions avec les œuvres.</p>
+                        <a href="{{ path('visiteur_index') }}" class="btn btn-warning">Voir les visiteurs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

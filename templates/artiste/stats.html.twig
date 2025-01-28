@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques des Artistes{% endblock %}
+
+{% block body %}
+<h1>Statistiques des Artistes</h1>
+
+<div class="statistiques">
+    <h2>Nombre d'œuvres par artiste</h2>
+    <ul>
+        {% for artiste in artistes %}
+            <li>{{ artiste.nom }} : {{ artiste.oeuvres|length }} œuvre(s)</li>
+        {% else %}
+            <li>Aucun artiste trouvé.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="statistiques">
+    <h2>Les artistes les plus suivis</h2>
+    <ul>
+        {% for artiste in artistes_les_plus_suivis %}
+            <li>{{ artiste.nom }} : {{ artiste.visiteurs|length }} follower(s)</li>
+        {% else %}
+            <li>Aucun artiste suivi.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="statistiques">
+    <h2>Les œuvres les plus visitées</h2>
+    <ul>
+        {% for oeuvre in oeuvres_les_plus_visitees %}
+            <li>{{ oeuvre.titre }} : {{ oeuvre.visiteurs|length }} visite(s)</li>
+        {% else %}
+            <li>Aucune œuvre visitée.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

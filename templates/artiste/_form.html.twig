@@ -1,0 +1,102 @@
+<div class="container mt-5 p-5 rounded" style="background: linear-gradient(135deg, rgb(71 23 10 / 26%), rgb(76 40 40 / 7%), rgba(199, 176, 174, 0.12), rgb(76 40 40 / 57%)); box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);">
+    <h2 class="text-center mb-4 fw-bold" style="color: #6a3e2f; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); font-size: 2rem;">
+        Artiste
+    </h2>    
+
+    {{ form_start(form) }}
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control shadow-sm', 'placeholder': 'Entrez le nom de l\'artiste', 'style': 'border-radius: 30px; background-color: #f7f5f2'}}) }}
+                {{ form_errors(form.nom, {'attr': {'class': 'invalid-feedback'}}) }}
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.date_naissance, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.date_naissance, {'attr': {'class': 'form-control shadow-sm', 'style': 'border-radius: 30px; background-color: #f7f5f2;'}}) }}
+                {{ form_errors(form.date_naissance) }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="form-group">
+                {{ form_label(form.biographie, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.biographie, {'attr': {'class': 'form-control shadow-sm', 'placeholder': 'Entrez une biographie détaillée', 'rows': '5', 'style': 'border-radius: 30px; background-color: #f7f5f2;'}}) }}
+                {{ form_errors(form.biographie) }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <!-- Section Photo déplacée ici -->
+            <div class="form-group">
+                {% if artiste.photo %}
+                    <img src="{{ asset('uploads/photos/' ~ artiste.photo) }}" 
+                         alt="Photo de {{ artiste.nom }}" 
+                         class="rounded-circle img-thumbnail shadow-lg" 
+                         style="width: 150px; height: 150px; object-fit: cover; transition: transform 0.3s ease-in-out;">
+                {% else %}
+                    <img id="preview" src="{{ asset('uploads/photos/default-photo.jpg') }}" 
+                         alt="Photo par défaut" 
+                         class="rounded-circle img-thumbnail shadow-lg" 
+                         style="width: 150px; height: 150px; object-fit: cover; transition: transform 0.3s ease-in-out;">     
+                {% endif %}
+                
+                {{ form_label(form.photo, 'Photo', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.photo, {'attr': {'class': 'form-control shadow-sm', 'style': 'border-radius: 30px; background-color: #f7f5f2'}}) }}
+                {{ form_errors(form.photo) }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{{ path('artiste_index') }}" class="btn btn-secondary w-100" style="border-radius: 30px; background-color: #6c757d; border: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">Retour à la liste</a>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-success w-100" style="border-radius: 30px; background-color:rgb(83, 52, 31); border: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); transition: transform 0.2s;">
+                {{ button_label|default('Créer') }}
+            </button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+    <script>
+        // Script pour gérer l'aperçu de l'image téléchargée
+        document.getElementById('{{ form.photo.vars.id }}').addEventListener('change', function (event) {
+            const file = event.target.files[0]; // Récupérer le fichier sélectionné
+            const preview = document.getElementById('preview'); // Élément img pour l'aperçu
+
+            if (file) {
+                // Vérifier la taille du fichier (2 Mo maximum)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Le fichier est trop volumineux. Veuillez sélectionner un fichier de moins de 2 Mo.');
+                    event.target.value = ''; // Réinitialiser le champ fichier
+                    preview.style.display = 'none';
+                    return;
+                }
+
+                // Créer une URL locale pour l'image et l'afficher
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    preview.style.transform = 'scale(1.05)';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Si aucun fichier sélectionné, cacher l'aperçu
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+        });
+    </script>
+</div>

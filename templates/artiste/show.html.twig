@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'Artiste{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <!-- Carte principale -->
+    <div class="card shadow-lg p-4" style="background-color: rgb(97 67 67 / 18%);">
+        <!-- Photo de l'artiste -->
+        <div class="text-center mb-4">
+            {% if artiste.photo %}
+                <img src="{{ asset('uploads/photos/' ~ artiste.photo) }}" 
+                     alt="Photo de {{ artiste.nom }}" 
+                     class="rounded-circle img-thumbnail shadow" 
+                     style="width: 150px; height: 150px; object-fit: cover;">
+            {% else %}
+                <img src="{{ asset('uploads/photos/default-photo.jpg') }}" 
+                     alt="Photo par défaut" 
+                     class="rounded-circle img-thumbnail shadow" 
+                     style="width: 150px; height: 150px; object-fit: cover;">
+            {% endif %}
+        </div>
+
+        <!-- Nom de l'artiste -->
+        <h2 class="text-center text-dark font-weight-bold mb-3" style="font-size: 2rem;">
+            {{ artiste.nom }}
+        </h2>
+
+        <!-- Section des détails -->
+        <div class="row">
+            <!-- Carte de biographie -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm p-3" style="background-color:rgba(220, 216, 211, 0.83)">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-book text-dark" style="font-size: 1.5rem; margin-right: 10px;"></i>
+                        <h5 class="mb-0 text-dark">Biographie</h5>
+                    </div>
+                    <hr class="bg-light">
+                    <p class="mt-2 text-dark">{{ artiste.biographie }}</p>
+                </div>
+            </div>
+
+            <!-- Carte de date de naissance -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm p-3" style="background-color: #dcd8d3">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-calendar text-dark" style="font-size: 1.5rem; margin-right: 10px;"></i>
+                        <h5 class="mb-0 text-dark">Date de Naissance</h5>
+                    </div>
+                    <hr class="bg-light">
+                    <p class="mt-2 text-dark">{{ artiste.dateNaissance ? artiste.dateNaissance|date('d-m-Y') : 'Non définie' }}</p>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="mt-5">
+            <h3 class="text-dark">Œuvres de {{ artiste.nom }}</h3>
+            {% if artiste.oeuvres is not empty %}
+                <div class="row">
+                    {% for oeuvre in artiste.oeuvres %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm" style="background-color:rgba(132, 97, 97, 0.34);">
+                                {% if oeuvre.photo %}
+                                    <img src="{{ asset('uploads/photos/' ~ oeuvre.photo) }}" 
+                                         alt="{{ oeuvre.titre }}" 
+                                         class="card-img-top" 
+                                         style="object-fit: cover; height: 200px;">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">{{ oeuvre.titre }}</h5>
+                                    <p class="card-text text-dark">{{ oeuvre.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">Aucune œuvre associée à cet artiste.</p>
+            {% endif %}
+        </div>
+        <!-- Section des boutons -->
+        <div class="d-flex justify-content-start align-items-center mt-4">
+            <a href="{{ path('artiste_edit', {'id': artiste.id}) }}" class="btn btn-warning me-2 shadow-sm">
+                <i class="bi bi-pencil-square"></i> Modifier
+            </a>
+            {{ include('artiste/_delete_form.html.twig', {'id': artiste.id}) }}
+        </div>
+        <div class="text-end mt-3">
+            <a href="{{ path('artiste_index') }}" class="btn btn-secondary shadow-sm">
+                <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

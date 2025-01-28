@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <style>
+        /* Réinitialisation des styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #f6f4ee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: linear-gradient(145deg, #ffffff, #f0e8db);
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #4a3a2a;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #d0b49c;
+            border-radius: 10px;
+            background-color: #fbf8f3;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #b28962;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(178, 137, 98, 0.3);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4a3a2a;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #3a2d21;
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .link a {
+            color: #4a3a2a;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .link a:hover {
+            color: #3a2d21;
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+
+        .alert-dismissible .btn-close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            color: #842029;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+
+        <!-- Erreur affichée si une erreur se produit -->
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+                <button type="button" class="btn-close" aria-label="Close">&times;</button>
+            </div>
+        {% endif %}
+
+        <!-- Message si l'utilisateur est connecté -->
+        {% if app.user %}
+            <div class="alert alert-success">
+                Vous êtes connecté(e) en tant que <strong>{{ app.user.userIdentifier }}</strong>. 
+                <a href="{{ path('app_logout') }}" class="link">Se déconnecter</a>
+            </div>
+        {% endif %}
+
+        <!-- Titre -->
+        <h1>Connexion</h1>
+
+        <!-- Formulaire -->
+        <form method="post" action="{{ path('app_login') }}">
+            
+            <!-- Champ Email -->
+            <input 
+                type="email" 
+                name="email" 
+                id="inputEmail" 
+                class="form-control" 
+                placeholder="Adresse e-mail" 
+                value="{{ last_username }}" 
+                autocomplete="email" 
+                required 
+                autofocus
+            >
+
+            <!-- Champ Mot de passe -->
+            <input 
+                type="password" 
+                name="password" 
+                id="inputPassword" 
+                class="form-control" 
+                placeholder="Mot de passe" 
+                autocomplete="current-password" 
+                required
+            >
+
+            <!-- Token CSRF -->
+            <input 
+                type="hidden" 
+                name="_csrf_token" 
+                value="{{ csrf_token('authenticate') }}"
+            >
+
+            <!-- Bouton de soumission -->
+            <button class="btn" type="submit">Se connecter</button>
+
+            <!-- Lien pour inscription -->
+            <div class="link">
+                <a href="{{ path('app_register') }}">Pas encore inscrit(e) ? Créez un compte</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

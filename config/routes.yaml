@@ -1,0 +1,26 @@
+# config/routes.yaml
+
+# Définition des routes pour les contrôleurs
+artiste_index:
+    path: /artiste
+    controller: App\Controller\ArtisteController::index
+    methods: [GET]
+
+oeuvre_index:
+    path: /oeuvre
+    controller: App\Controller\OeuvreController::index
+    methods: [GET]
+
+visiteur_index:
+    path: /visiteur
+    controller: App\Controller\VisiteurController::index
+    methods: [GET]
+artiste_delete:
+    path: /artiste/{id}/delete
+    controller: App\Controller\ArtisteController::delete
+    methods: [POST]
+
+# Utilisation d'un répertoire de contrôleurs
+controllers:
+    resource: '../src/Controller/'
+    type: 'attribute'

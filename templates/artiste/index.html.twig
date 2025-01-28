@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Artistes{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4"style="font-family: 'Poppins', sans-serif; font-weight: 700; color: #4e342e;">Liste des Artistes</h1>
+
+        <div class="text-end mb-4">
+            <a href="{{ path('artiste_new') }}" class="btn btn-success btn-lg shadow"><i class="bi bi-person-plus-fill me-2"></i>Ajouter un Artiste</a>
+        </div>
+
+
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle" style="border-spacing: 0 15px; border-collapse: separate;">
+                <thead style="background: linear-gradient(135deg, #d7ccc8, #a1887f); color: #4e342e; font-size: 16px;">
+                    <tr>
+                        <th scope="col" style="border-radius: 10px 0 0 10px;">Photo</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Biographie</th>
+                        <th scope="col">Date de Naissance</th>
+                        <th scope="col" style="border-radius: 0 10px 10px 0;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artiste in artistes %}
+                        <tr class="artist-row" style="background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; transition: transform 0.3s, background-color 0.3s;">
+                            <td class="text-center" style="vertical-align: middle;">
+                                {% if artiste.photo %}
+                                    <img src="{{ asset('uploads/photos/' ~ artiste.photo) }}" alt="{{ artiste.nom }}" 
+                                         class="rounded-circle shadow-sm" style="width: 80px; height: 80px; object-fit: cover;">
+                                {% else %}
+                                    <img src="{{ asset('uploads/photos/default-photo.jpg') }}" alt="Photo par défaut" 
+                                         class="rounded-circle shadow-sm" style="width: 80px; height: 80px; object-fit: cover;">
+                                {% endif %}
+                            </td>
+                            <td class="align-middle" style="font-size: 18px; font-weight: 600; color: #4e342e;">{{ artiste.nom }}</td>
+                            <td class="align-middle" style="font-size: 14px; color: #6d4c41;">{{ artiste.biographie[:100] ~ '...' }}</td>
+                            <td class="align-middle" style="color: #4e342e;">{{ artiste.dateNaissance ? artiste.dateNaissance|date('d-m-Y') : '' }}</td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="{{ path('artiste_show', {'id': artiste.id}) }}" 
+                                       class="btn btn-sm shadow rounded-circle" title="Afficher" 
+                                       style="background-color: #6c5b7b; color: white;">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ path('artiste_edit', {'id': artiste.id}) }}" 
+                                       class="btn btn-sm shadow rounded-circle" title="Modifier" 
+                                       style="background-color: #a1887f; color: white;">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ path('app_artiste_delete', {'id': artiste.id}) }}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-sm shadow rounded-circle" title="Supprimer" 
+                                                style="background-color: #e55039; color: white;" 
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet artiste ?')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ artiste.id) }}">
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center" style="font-size: 18px; color: #4e342e;">Aucun artiste trouvé.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-sm">
+                {% if artistes.getCurrentPageNumber() > 1 %}
+                    <li class="page-item">
+                        <a class="page-link text-brown" href="{{ path(app.request.attributes.get('_route'), {'page': artistes.getCurrentPageNumber() - 1}) }}" aria-label="Previous">
+                            &laquo;
+                        </a>
+                    </li>
+                {% endif %}
+                {% for page in 1..artistes.getPageCount() %}
+                    <li class="page-item {{ page == artistes.getCurrentPageNumber() ? 'active' : '' }}">
+                        <a class="page-link {{ page == artistes.getCurrentPageNumber() ? 'bg-brown text-white' : 'text-brown' }}" 
+                           href="{{ path(app.request.attributes.get('_route'), {'page': page}) }}">
+                            {{ page }}
+                        </a>
+                    </li>
+                {% endfor %}
+                {% if artistes.getCurrentPageNumber() < artistes.getPageCount() %}
+                    <li class="page-item">
+                        <a class="page-link text-brown" href="{{ path(app.request.attributes.get('_route'), {'page': artistes.getCurrentPageNumber() + 1}) }}" aria-label="Next">
+                            &raquo;
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+
+    <style>
+    
+        .artist-row:hover {
+            transform: scale(1.02);
+            background-color: rgba(239, 222, 205, 0.7);
+        }
+
+        .page-item.active .page-link {
+            border: none;
+        }
+
+        .page-link:hover {
+            background-color: #a1887f !important;
+            color: white !important;
+        }
+    </style>
+{% endblock %}

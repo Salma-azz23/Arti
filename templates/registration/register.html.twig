@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <style>
+        /* Réinitialisation des styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f5f1eb; /* Beige clair */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff; /* Blanc */
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid #d8c7b7; /* Beige clair */
+        }
+
+        h1 {
+            color: #5e4633; /* Marron foncé */
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #5e4633; /* Marron foncé */
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #d8c7b7; /* Beige clair */
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #fdfaf6; /* Blanc cassé */
+            color: #5e4633; /* Marron foncé */
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #a0897a; /* Marron clair */
+            box-shadow: 0 0 5px rgba(160, 137, 122, 0.4); /* Marron clair */
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #5e4633; /* Marron foncé */
+            color: #ffffff; /* Blanc */
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #4b3625; /* Marron encore plus foncé */
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .link a {
+            color: #5e4633; /* Marron foncé */
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #a0897a; /* Marron clair */
+            border-radius: 8px;
+            background-color: #fdf5f3; /* Beige rosé */
+            color: #5e4633; /* Marron foncé */
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Affichage des erreurs -->
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert">
+                {{ flash_error }}
+            </div>
+        {% endfor %}
+
+        <!-- Titre -->
+        <h1>Inscription</h1>
+
+        <!-- Début du formulaire -->
+        {{ form_start(registrationForm) }}
+
+        <!-- Champ Email -->
+        <label for="email" class="form-label">Adresse e-mail</label>
+        {{ form_row(registrationForm.email, {
+            attr: {
+                class: 'form-control',
+                placeholder: 'Votre adresse e-mail'
+            }
+        }) }}
+
+        <!-- Champ Mot de passe -->
+        <label for="plainPassword" class="form-label">Mot de passe</label>
+        {{ form_row(registrationForm.plainPassword, {
+            attr: {
+                class: 'form-control',
+                placeholder: 'Choisissez un mot de passe'
+            }
+        }) }}
+
+        <!-- Champ Conditions générales -->
+        <div>
+            {{ form_row(registrationForm.agreeTerms, {
+                label: 'J\'accepte les conditions générales'
+            }) }}
+        </div>
+
+        <!-- Bouton d'inscription -->
+        <button type="submit" class="btn">S'inscrire</button>
+
+        <!-- Lien vers la connexion -->
+        <div class="link">
+            <a href="{{ path('app_login') }}">Déjà inscrit ? Connectez-vous</a>
+        </div>
+
+        {{ form_end(registrationForm) }}
+    </div>
+</body>
+</html>
