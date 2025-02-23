@@ -12,30 +12,109 @@
             box-sizing: border-box;
         }
 
+        /* Police moderne */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+
         body {
-            font-family: 'Poppins', Arial, sans-serif;
-            background-color: #f6f4ee;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f6f4ee, #e7d9cc);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
 
         .login-container {
-            background: linear-gradient(145deg, #ffffff, #f0e8db);
-            padding: 25px 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
             width: 100%;
-            max-width: 400px;
+            max-width: 1000px;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            background-color: #fff;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        h1 {
-            color: #4a3a2a;
-            font-size: 1.8rem;
-            text-align: center;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-form, .signup-info {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-form {
+            background-color: #fff9f4;
+        }
+
+        .signup-info {
+            background-image: url('https://source.unsplash.com/800x600/?nature,water');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signup-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .signup-info h2 {
+            position: relative;
+            z-index: 2;
+            font-size: 2.5rem;
             margin-bottom: 20px;
-            font-weight: bold;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        .signup-info p {
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            line-height: 1.6;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            animation: slideInLeft 1.2s ease-in-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        h2 {
+            color: #5e4633;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #777;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            animation: fadeIn 1.2s ease-in-out;
         }
 
         .form-control {
@@ -47,48 +126,51 @@
             background-color: #fbf8f3;
             font-size: 1rem;
             transition: all 0.3s ease;
+            animation: fadeIn 1.4s ease-in-out;
         }
 
         .form-control:focus {
             outline: none;
             border-color: #b28962;
             background-color: #fff;
-            box-shadow: 0 0 8px rgba(178, 137, 98, 0.3);
+            box-shadow: 0 0 10px rgba(178, 137, 98, 0.3);
         }
 
         .btn {
-            display: block;
             width: 100%;
             padding: 15px;
-            background-color: #4a3a2a;
+            background-color: #b28962;
             color: #ffffff;
             font-size: 1rem;
-            font-weight: bold;
-            text-align: center;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: fadeIn 1.6s ease-in-out;
         }
 
         .btn:hover {
-            background-color: #3a2d21;
+            background-color: #a07454;
+            transform: translateY(-3px);
         }
 
         .link {
             text-align: center;
             margin-top: 15px;
+            animation: fadeIn 1.8s ease-in-out;
         }
 
         .link a {
-            color: #4a3a2a;
+            color: #5e4633;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-weight: 500;
             transition: color 0.3s ease;
+            font-size: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .link a:hover {
-            color: #3a2d21;
+            color: #b28962;
             text-decoration: underline;
         }
 
@@ -98,12 +180,19 @@
             font-size: 0.9rem;
             margin-bottom: 15px;
             text-align: center;
+            animation: fadeIn 1s ease-in-out;
         }
 
         .alert-danger {
             background-color: #f8d7da;
             color: #842029;
             border: 1px solid #f5c2c7;
+        }
+
+        .alert-success {
+            background-color:rgb(236, 223, 207);
+            color:rgb(87, 51, 21);
+            border: 1px solidrgb(173, 172, 161);
         }
 
         .alert-dismissible .btn-close {
@@ -116,72 +205,96 @@
             color: #842029;
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+
+            .login-form, .signup-info {
+                width: 100%;
+                padding: 30px;
+            }
+
+            .signup-info {
+                display: none; /* Masquer la section info sur mobile */
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="login-container" style="background-image: url('{{ asset('uploads/photos/login.jpg') }}'); background-size: cover; background-position: center;">
+        <div class="login-form">
+            <!-- Erreur affichée si une erreur se produit -->
+            {% if error %}
+                <div class="alert alert-danger alert-dismissible">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                    <button type="button" class="btn-close" aria-label="Close">&times;</button>
+                </div>
+            {% endif %}
 
-        <!-- Erreur affichée si une erreur se produit -->
-        {% if error %}
-            <div class="alert alert-danger alert-dismissible">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-                <button type="button" class="btn-close" aria-label="Close">&times;</button>
-            </div>
-        {% endif %}
+            <!-- Message si l'utilisateur est connecté -->
+            {% if app.user %}
+                <div class="alert alert-success">
+                    Vous êtes connecté(e) en tant que <strong>{{ app.user.userIdentifier }}</strong>. 
+                    <a href="{{ path('app_logout') }}" class="link">Se déconnecter</a>
+                </div>
+            {% endif %}
 
-        <!-- Message si l'utilisateur est connecté -->
-        {% if app.user %}
-            <div class="alert alert-success">
-                Vous êtes connecté(e) en tant que <strong>{{ app.user.userIdentifier }}</strong>. 
-                <a href="{{ path('app_logout') }}" class="link">Se déconnecter</a>
-            </div>
-        {% endif %}
+            <!-- Titre -->
+            <h2>Connexion</h2>
+            <p>Connectez-vous pour accéder à votre espace personnel.</p>
 
-        <!-- Titre -->
-        <h1>Connexion</h1>
+            <!-- Formulaire -->
+            <form method="post" action="{{ path('app_login') }}">
+                <!-- Champ Email -->
+                <input 
+                    type="email" 
+                    name="email" 
+                    id="inputEmail" 
+                    class="form-control" 
+                    placeholder="Adresse e-mail" 
+                    value="{{ last_username }}" 
+                    autocomplete="email" 
+                    required 
+                    autofocus
+                >
 
-        <!-- Formulaire -->
-        <form method="post" action="{{ path('app_login') }}">
-            
-            <!-- Champ Email -->
-            <input 
-                type="email" 
-                name="email" 
-                id="inputEmail" 
-                class="form-control" 
-                placeholder="Adresse e-mail" 
-                value="{{ last_username }}" 
-                autocomplete="email" 
-                required 
-                autofocus
-            >
+                <!-- Champ Mot de passe -->
+                <input 
+                    type="password" 
+                    name="password" 
+                    id="inputPassword" 
+                    class="form-control" 
+                    placeholder="Mot de passe" 
+                    autocomplete="current-password" 
+                    required
+                >
 
-            <!-- Champ Mot de passe -->
-            <input 
-                type="password" 
-                name="password" 
-                id="inputPassword" 
-                class="form-control" 
-                placeholder="Mot de passe" 
-                autocomplete="current-password" 
-                required
-            >
+                <!-- Token CSRF -->
+                <input 
+                    type="hidden" 
+                    name="_csrf_token" 
+                    value="{{ csrf_token('authenticate') }}"
+                >
 
-            <!-- Token CSRF -->
-            <input 
-                type="hidden" 
-                name="_csrf_token" 
-                value="{{ csrf_token('authenticate') }}"
-            >
+                <!-- Bouton de soumission -->
+                <button type="submit" class="btn">Se connecter</button>
+            </form>
 
-            <!-- Bouton de soumission -->
-            <button class="btn" type="submit">Se connecter</button>
-
-            <!-- Lien pour inscription -->
+            <!-- Liens supplémentaires -->
             <div class="link">
-                <a href="{{ path('app_register') }}">Pas encore inscrit(e) ? Créez un compte</a>
+                <a href="#">Mot de passe oublié ?</a>
+                <div class="register">
+                    <a href="{{ path('app_register') }}">Pas encore inscrit(e) ? Créez un compte</a>
+                </div>
             </div>
-        </form>
+        </div>
+
+        <div class="signup-info">
+            <h2>Bienvenue !</h2>
+            <p>Rejoignez notre communauté et profitez de tous nos services.</p>
+        </div>
     </div>
 </body>
 </html>

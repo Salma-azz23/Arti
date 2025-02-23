@@ -12,152 +12,251 @@
             box-sizing: border-box;
         }
 
+        /* Police moderne */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+
         body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: #f5f1eb; /* Beige clair */
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f6f4ee, #e7d9cc);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
 
-        .container {
-            background-color: #ffffff; /* Blanc */
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        .register-container {
+            display: flex;
+            flex-wrap: wrap;
             width: 100%;
-            max-width: 420px;
-            border: 1px solid #d8c7b7; /* Beige clair */
+            max-width: 1000px;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            background-color: #fff;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        h1 {
-            color: #5e4633; /* Marron foncé */
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-align: center;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .register-form, .signup-info {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register-form {
+            background-color: #fff9f4;
+        }
+
+        .signup-info {
+            background-image: url('https://source.unsplash.com/800x600/?nature,water');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signup-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .signup-info h2 {
+            position: relative;
+            z-index: 2;
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideInLeft 1s ease-in-out;
         }
 
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: #5e4633; /* Marron foncé */
-            font-weight: 500;
+        .signup-info p {
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            line-height: 1.6;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            animation: slideInLeft 1.2s ease-in-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        h2 {
+            color: #5e4633;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #777;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            animation: fadeIn 1.2s ease-in-out;
         }
 
         .form-control {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             margin-bottom: 20px;
-            border: 1px solid #d8c7b7; /* Beige clair */
-            border-radius: 8px;
+            border: 1px solid #d0b49c;
+            border-radius: 10px;
+            background-color: #fbf8f3;
             font-size: 1rem;
-            background-color: #fdfaf6; /* Blanc cassé */
-            color: #5e4633; /* Marron foncé */
+            transition: all 0.3s ease;
+            animation: fadeIn 1.4s ease-in-out;
         }
 
         .form-control:focus {
             outline: none;
-            border-color: #a0897a; /* Marron clair */
-            box-shadow: 0 0 5px rgba(160, 137, 122, 0.4); /* Marron clair */
+            border-color: #b28962;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(178, 137, 98, 0.3);
         }
 
         .btn {
             width: 100%;
-            padding: 12px;
-            background-color: #5e4633; /* Marron foncé */
-            color: #ffffff; /* Blanc */
+            padding: 15px;
+            background-color: #b28962;
+            color: #ffffff;
             font-size: 1rem;
-            font-weight: 600;
-            text-align: center;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: fadeIn 1.6s ease-in-out;
         }
 
         .btn:hover {
-            background-color: #4b3625; /* Marron encore plus foncé */
+            background-color: #a07454;
+            transform: translateY(-3px);
         }
 
         .link {
             text-align: center;
             margin-top: 15px;
-            font-size: 0.9rem;
+            animation: fadeIn 1.8s ease-in-out;
         }
 
         .link a {
-            color: #5e4633; /* Marron foncé */
+            color: #5e4633;
             text-decoration: none;
             font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .link a:hover {
+            color: #b28962;
             text-decoration: underline;
         }
 
         .alert {
             margin-bottom: 20px;
             padding: 10px;
-            border: 1px solid #a0897a; /* Marron clair */
+            border: 1px solid #a0897a;
             border-radius: 8px;
-            background-color: #fdf5f3; /* Beige rosé */
-            color: #5e4633; /* Marron foncé */
+            background-color: #fdf5f3;
+            color: #5e4633;
             font-size: 0.9rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .register-container {
+                flex-direction: column;
+            }
+
+            .register-form, .signup-info {
+                width: 100%;
+                padding: 30px;
+            }
+
+            .signup-info {
+                display: none; /* Masquer la section info sur mobile */
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Affichage des erreurs -->
-        {% for flash_error in app.flashes('verify_email_error') %}
-            <div class="alert">
-                {{ flash_error }}
-            </div>
-        {% endfor %}
+    <div class="register-container" style="background-image: url('{{ asset('uploads/photos/login.jpg') }}'); background-size: cover; background-position: center;">
+        <div class="register-form">
+            <h2>Inscription</h2>
+            <p>Rejoignez notre communauté et commencez votre voyage avec nous.</p>
 
-        <!-- Titre -->
-        <h1>Inscription</h1>
+            <!-- Affichage des erreurs -->
+            {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="alert">
+                    {{ flash_error }}
+                </div>
+            {% endfor %}
 
-        <!-- Début du formulaire -->
-        {{ form_start(registrationForm) }}
+            <!-- Début du formulaire -->
+            {{ form_start(registrationForm) }}
 
-        <!-- Champ Email -->
-        <label for="email" class="form-label">Adresse e-mail</label>
-        {{ form_row(registrationForm.email, {
-            attr: {
-                class: 'form-control',
-                placeholder: 'Votre adresse e-mail'
-            }
-        }) }}
-
-        <!-- Champ Mot de passe -->
-        <label for="plainPassword" class="form-label">Mot de passe</label>
-        {{ form_row(registrationForm.plainPassword, {
-            attr: {
-                class: 'form-control',
-                placeholder: 'Choisissez un mot de passe'
-            }
-        }) }}
-
-        <!-- Champ Conditions générales -->
-        <div>
-            {{ form_row(registrationForm.agreeTerms, {
-                label: 'J\'accepte les conditions générales'
+            <!-- Champ Email -->
+            <label for="email" class="form-label">Adresse e-mail</label>
+            {{ form_row(registrationForm.email, {
+                attr: {
+                    class: 'form-control',
+                    placeholder: 'Votre adresse e-mail'
+                }
             }) }}
+
+            <!-- Champ Mot de passe -->
+            <label for="plainPassword" class="form-label">Mot de passe</label>
+            {{ form_row(registrationForm.plainPassword, {
+                attr: {
+                    class: 'form-control',
+                    placeholder: 'Choisissez un mot de passe'
+                }
+            }) }}
+
+            <!-- Champ Conditions générales -->
+            <div>
+                {{ form_row(registrationForm.agreeTerms, {
+                    label: 'J\'accepte les conditions générales'
+                }) }}
+            </div>
+
+            <!-- Bouton d'inscription -->
+            <button type="submit" class="btn">S'inscrire</button>
+
+            <!-- Lien vers la connexion -->
+            <div class="link">
+                <a href="{{ path('app_login') }}">Déjà inscrit ? Connectez-vous</a>
+            </div>
+
+            {{ form_end(registrationForm) }}
         </div>
 
-        <!-- Bouton d'inscription -->
-        <button type="submit" class="btn">S'inscrire</button>
-
-        <!-- Lien vers la connexion -->
-        <div class="link">
-            <a href="{{ path('app_login') }}">Déjà inscrit ? Connectez-vous</a>
+        <div class="signup-info">
+            <h2>Bienvenue !</h2>
+            <p>Découvrez un monde de possibilités en créant votre compte dès aujourd'hui.</p>
         </div>
-
-        {{ form_end(registrationForm) }}
     </div>
 </body>
 </html>

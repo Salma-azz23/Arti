@@ -17,7 +17,14 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ form_label(form.date_naissance, null, {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.date_naissance, {'attr': {'class': 'form-control shadow-sm', 'style': 'border-radius: 30px; background-color: #f7f5f2;'}}) }}
+                {{ form_widget(form.date_naissance, {
+    'attr': {
+        'class': 'form-control shadow-sm',
+        'style': 'border-radius: 30px; background-color: #f7f5f2;',
+        'max': "now"|date('Y-m-d'),
+         'placeholder': 'JJ/MM/AAAA'
+    }
+}) }}
                 {{ form_errors(form.date_naissance) }}
             </div>
         </div>

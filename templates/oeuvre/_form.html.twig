@@ -15,7 +15,14 @@
         <div class="col-md-6">
             <div class="form-group">
                 {{ form_label(form.date_creation, null, {'label_attr': {'class': 'form-label text-black'}}) }}
-                {{ form_widget(form.date_creation, {'attr': {'class': 'form-control form-control-lg', 'style': 'background-color: #f7f5f2; border-radius: 30px;'}}) }}
+                {{ form_widget(form.date_creation, {
+    'attr': {
+        'class': 'form-control shadow-sm',
+        'style': 'border-radius: 30px; background-color: #f7f5f2;',
+        'max': "now"|date('Y-m-d'),
+         'placeholder': 'JJ/MM/AAAA'
+    }
+}) }}
                 {{ form_errors(form.date_creation) }}
             </div>
         </div>
