@@ -30,7 +30,6 @@ Arti est une plateforme web innovante dédiée à la gestion des artistes, de le
 ## 🛠 Technologies Utilisées
 
 ### **Frontend**
-- **ReactJS** : Pour une interface utilisateur dynamique et réactive.
 - **Bootstrap 4** : Pour un design responsive et moderne.
 
 ### **Backend**
