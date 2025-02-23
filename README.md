@@ -1,6 +1,6 @@
 # Arti - Plateforme de Gestion des Artistes et de leurs Œuvres
 
-**🗓 Février 2024 – Présent**
+**🗓 Decembre 2024 – Présent**
 
 Arti est une plateforme web innovante dédiée à la gestion des artistes, de leurs œuvres et de leur interaction avec la communauté. Ce projet vise à offrir une solution complète pour les artistes afin de gérer leur présence en ligne, leurs créations et leurs interactions avec leur public. La plateforme intègre des fonctionnalités avancées pour une expérience utilisateur riche et interactive.
 
